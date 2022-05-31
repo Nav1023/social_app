@@ -1,0 +1,4 @@
+{
+  "jwtSecret" : "socialSecretToken",
+  "dbUrl": "mongodb+srv://admin:admin@batchfeb.30oe9.mongodb.net/social?retryWrites=true&w=majority"
+}
