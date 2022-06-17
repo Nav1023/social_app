@@ -8,10 +8,9 @@ module.exports = (req, res, next) => {
   }
   try {
      const payload = jwt.decode(token, config.get('jwtSecret'));
-     console.log(payload);
+     req.userId = payload.user.id;
      next();
   } catch (error) {
     return res.status(401).send({ message: 'Token is invaid'});    
   }
-
 }

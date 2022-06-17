@@ -2,6 +2,7 @@ const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const bcrypt = require('bcryptjs');
+const { validationResult  } = require('express-validator');
 
 const userController = {
   test: (req, res) => {
@@ -9,11 +10,21 @@ const userController = {
   },
   create: async (req, res) => {
     try{
-      const { email, password } = req.body;
-
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        console.log(errors.errors);
+        if(errors.errors.length > 0)
+        {
+          return res.status(400).send({
+            message: 'invalid keys',
+          });
+        }
+      }
+      const { email, password, name } = req.body;
       const user = new User({
         email, 
-        password
+        password,
+        name
       });
 
       const salt = await bcrypt.genSalt(10);
